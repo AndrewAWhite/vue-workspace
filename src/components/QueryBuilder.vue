@@ -19,9 +19,9 @@ export default {
       rules: [
         {
           type: 'custom-component',
-          label: 'Multi',
+          label: 'Field Value',
           component: QueryBuilderCombo,
-          operators: ['=']
+          operators: ['fieldval']
         }
       ],
       query: {}

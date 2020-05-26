@@ -5,7 +5,10 @@
         <query-builder-group v-bind="slotProps" :query.sync="query"/>
       </template>
     </vue-query-builder>
-    {{ query }}
+    <vue-json-pretty
+      :data="query"
+    >
+    </vue-json-pretty>
   </div>
 </template>
 
@@ -13,63 +16,37 @@
 import VueQueryBuilder from 'vue-query-builder'
 import QueryBuilderGroup from './VuetifyQueryGroup'
 import FieldValRule from './FieldValRule'
+import VueJsonPretty from 'vue-json-pretty'
 
 export default {
   name: 'QueryBuilder',
   components: {
     VueQueryBuilder,
-    QueryBuilderGroup
+    QueryBuilderGroup,
+    VueJsonPretty
   },
   data() {
     return {
       rules: [
         {
-          type: "text",
-          id: "vegetable",
-          label: "Vegetable"
-        },
-        {
-          type: "radio",
-          id: "fruit",
-          label: "Fruit",
-          choices: [
-            { label: "Apple", value: "apple" },
-            { label: "Banana", value: "banana" }
-          ]
+          type: 'text',
+          id: 'vegetable',
+          label: 'Vegetable'
         }
       ],
 
       query: {
-        logicalOperator: "all",
+        logicalOperator: 'all',
         children: [
           {
-            type: "query-builder-group",
+            type: 'query-builder-rule',
             query: {
-              logicalOperator: "any",
-              children: [
-                {
-                  type: "query-builder-rule",
-                  query: {
-                    rule: "vegetable",
-                    operator: "contains",
-                    operand: "Vegetable",
-                    value: null
-                  }
-                },
-                {
-                  type: "query-builder-rule",
-                  query: {
-                    rule: "fruit",
-                    operand: "Fruit",
-                    value: "banana"
-                  }
-                }
-              ]
             }
-          }
+            }
         ]
+      }
+        
       }
     }
   }
-}
 </script>

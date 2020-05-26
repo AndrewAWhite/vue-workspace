@@ -1,63 +1,44 @@
 <template>
-  <div id="app">
-    <QueryBuilder />
-  </div>
+  <v-app>
+    <v-app-bar
+      app
+      color="primary"
+      dark
+    >
+      <div class="d-flex align-center">
+        Vuetify Query Builder
+      </div>
+
+      <v-spacer></v-spacer>
+
+      <v-btn
+        href="https://github.com/AndrewAWhite/vue-workspace"
+        target="_blank"
+        text
+      >
+        <span class="mr-2">Repo</span>
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <QueryBuilder/>
+    </v-content>
+  </v-app>
 </template>
 
 <script>
-import QueryBuilder from './components/QueryBuilder.vue'
+import QueryBuilder from './components/QueryBuilder'
 
 export default {
   name: 'App',
+
   components: {
     QueryBuilder
   },
-  props: {
-  }
+
+  data: () => ({
+    //
+  })
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-.vue-query-builder .vqb-group .rule-actions{
-margin-bottom:20px
-}
-
-.vue-query-builder .vqb-rule{
-  margin-top:15px;
-  margin-bottom:15px;
-  background-color:#f5f5f5;
-  border-color:#ddd;
-  padding:15px
-}
-
-.vue-query-builder .vqb-group.depth-1 .vqb-rule,.vue-query-builder .vqb-group.depth-2{
-  border-left:2px solid #8bc34a
-}
-
-.vue-query-builder .vqb-group.depth-2 .vqb-rule,.vue-query-builder .vqb-group.depth-3{
-  border-left:2px solid #00bcd4
-}
-
-.vue-query-builder .vqb-group.depth-3 .vqb-rule,.vue-query-builder .vqb-group.depth-4{
-  border-left:2px solid #ff5722
-}
-
-.vue-query-builder .close{
-  opacity:1;
-  color:#969696
-}
-
-@media (min-width:768px){
-  .vue-query-builder .vqb-rule.form-inline .form-group{
-    display:block
-  }
-}
-</style>

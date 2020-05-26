@@ -1,34 +1,75 @@
 <template>
   <div>
-    <vue-query-builder
-      :rules="rules"
-      v-model="query"
-    />
+   <vue-query-builder :rules="rules" v-model="query">
+      <template v-slot:default="slotProps">
+        <query-builder-group v-bind="slotProps" :query.sync="query"/>
+      </template>
+    </vue-query-builder>
     {{ query }}
   </div>
 </template>
 
 <script>
 import VueQueryBuilder from 'vue-query-builder'
-import QueryBuilderCombo from './QueryBuilderCombo'
+import QueryBuilderGroup from './VuetifyQueryGroup'
+import FieldValRule from './FieldValRule'
 
 export default {
   name: 'QueryBuilder',
-  data () {
+  components: {
+    VueQueryBuilder,
+    QueryBuilderGroup
+  },
+  data() {
     return {
       rules: [
         {
-          type: 'custom-component',
-          label: 'Field Value',
-          component: QueryBuilderCombo,
-          operators: ['fieldval']
+          type: "text",
+          id: "vegetable",
+          label: "Vegetable"
+        },
+        {
+          type: "radio",
+          id: "fruit",
+          label: "Fruit",
+          choices: [
+            { label: "Apple", value: "apple" },
+            { label: "Banana", value: "banana" }
+          ]
         }
       ],
-      query: {}
+
+      query: {
+        logicalOperator: "all",
+        children: [
+          {
+            type: "query-builder-group",
+            query: {
+              logicalOperator: "any",
+              children: [
+                {
+                  type: "query-builder-rule",
+                  query: {
+                    rule: "vegetable",
+                    operator: "contains",
+                    operand: "Vegetable",
+                    value: null
+                  }
+                },
+                {
+                  type: "query-builder-rule",
+                  query: {
+                    rule: "fruit",
+                    operand: "Fruit",
+                    value: "banana"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
     }
-  },
-  components: {
-    VueQueryBuilder
   }
 }
 </script>

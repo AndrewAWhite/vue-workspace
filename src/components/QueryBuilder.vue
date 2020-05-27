@@ -3,8 +3,12 @@
    <vue-query-builder :rules="rules" v-model="query">
       <template v-slot:default="slotProps">
         <query-builder-group v-bind="slotProps" :query.sync="query"/>
+        <v-btn @click="post_query">
+          <v-icon>mdi-send</v-icon>
+        </v-btn>
       </template>
     </vue-query-builder>
+    
     <vue-json-pretty
       :data="query">
     </vue-json-pretty>
@@ -15,7 +19,9 @@
 import VueQueryBuilder from 'vue-query-builder'
 import QueryBuilderGroup from './VuetifyQueryGroup'
 import FieldValRule from './FieldValRule'
+import OutputValRule from './OutputValRule'
 import VueJsonPretty from 'vue-json-pretty'
+import token from '../config/portal_token'
 
 export default {
   name: 'QueryBuilder',
@@ -23,17 +29,40 @@ export default {
     VueQueryBuilder,
     QueryBuilderGroup,
     VueJsonPretty,
+    FieldValRule,
+    OutputValRule
+  },
+  methods: {
+    post_query: function() {
+      axios.post(
+
+      )
+    }
   },
   data() {
     return {
       rules: [
         {
           type: 'custom-component',
-          id: 'fieldval',
-          label: 'FieldVal',
-          component: FieldValRule,
-          operators: ['='],
+          id: 'outputval',
+          label: 'Output Value',
+          component: OutputValRule,
+          operators: ['=', 'contains', 'starts_with', 'ends_with'],
           default: {}
+        },
+        {
+          type: 'custom-component',
+          id: 'fieldval',
+          label: 'Field Value',
+          component: FieldValRule,
+          operators: ['=', 'contains', 'starts_with', 'ends_with'],
+          default: {}
+        },
+        {
+          type: 'date',
+          id: 'mdrec_key',
+          label: 'Mdrec Key',
+          operators: ['=']
         }
       ],
 
@@ -43,12 +72,8 @@ export default {
           {
             type: 'query-builder-rule',
             query: {
-              rule: 'fieldval',
-              selectedOperator: '=',
-              selectedOperand: 'Fieldval',
-              value: {clean_value: 'Ah alright'}
             }
-            }
+          }
         ]
       }
         

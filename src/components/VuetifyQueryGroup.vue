@@ -29,6 +29,7 @@
             :items="rules"
             item-text="label"
             item-value="id"
+            return-object
           >
           </v-select>
       </v-col>
@@ -49,7 +50,6 @@
       </v-col>
       </v-row>
       <query-builder-children v-bind="$props"/>
-     
       </v-container>
 </template>
 
@@ -67,6 +67,8 @@ export default {
   data () {
     return {
     }
+  },
+  methods: {
   }
 }
 </script>

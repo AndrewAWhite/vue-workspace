@@ -1,16 +1,16 @@
 <template>
   <v-row>
     <v-col>
-      Field Value:
+      Output Value:
     </v-col>
     <v-col>
         <v-select
-          v-model="field_name"
+          v-model="output_name"
           v-on:input="update_model"
-          :items="field_names">
+          :items="output_names">
         </v-select>
     </v-col>
-    <v-col>
+     <v-col>
         <v-select
           v-model="query.operator"
           :items="rule.operators"
@@ -18,7 +18,7 @@
     </v-col>
     <v-col>
         <v-text-field 
-          v-model="clean_value"
+          v-model="output_value"
           v-on:input="update_model" />
     </v-col>
   </v-row>
@@ -28,9 +28,11 @@ import axios from 'axios'
 import token from '../config/portal_token'
 
 export default {
-  name: 'FieldValRule',
+  name: 'OutputValRule',
   methods: {
-    update_model: function() { this.$emit('input', {field_name: this.$data.field_name, clean_value: this.$data.clean_value})},
+    update_model: function() { 
+      this.$emit('input', {output_name: this.$data.output_name, output_value: this.$data.output_value})
+      },
     get_fields: function(){
        axios(
          {
@@ -41,12 +43,12 @@ export default {
            },
            data:{
              task: 'get',
-             return_type: 'input_field'
+             return_type: 'output_name'
            }
          }
        ).then((resp) => {
-         this.field_names = []
-         for (let field of resp.data) this.field_names.push(field.field_name)
+         this.output_names = []
+         for (let field of resp.data) this.output_names.push(field.output_name)
          })
     }
   },
@@ -56,10 +58,9 @@ export default {
   },
   data () {
     return {
-      field_name: '',
-      field_names: [],
-      clean_value: '',
-      operator: ''
+      output_name: '',
+      output_names: [],
+      output_value: '',
     }
   },
   mounted() {

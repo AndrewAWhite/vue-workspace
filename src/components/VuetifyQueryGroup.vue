@@ -1,8 +1,7 @@
 <template>
-  <v-container
-  >
-    <v-row class="mb-6">
-      <v-col md="1">
+  <v-container style="border-left: 4px solid gray">
+    <v-row class="mb-6 grey lighten-3">
+      <v-col md="1" :offset-md="depth">
         <v-select
           id="vqb-match-type"
           v-model="query.logicalOperator"
@@ -12,16 +11,19 @@
           label="Match Type"
         >
         </v-select>
-        </v-col>
-        <v-col md="2">
-        <v-btn
+      </v-col>
+      
+      <v-col offset-md="5" md="1">
+      <v-btn
           v-if="depth > 1"
           @click="remove"
         ><v-icon>mdi-close</v-icon>
         </v-btn>
-        </v-col>
+      </v-col>
+    </v-row>
 
-      <v-col md="2">
+    <v-row class="mb-6">
+      <v-col md="2"  :offset-md="depth">
           <v-select
             v-model="selectedRule"
             :items="rules"
@@ -30,21 +32,25 @@
           >
           </v-select>
       </v-col>
-      <v-col md="2">
+
+      <v-col md="2" :offset-md="depth">
           <v-btn
             @click="addRule"
           >{{ labels.addRule }}
           </v-btn>
+      </v-col>
+      
+      <v-col md="2" :offset-md="depth">
           <v-btn
             v-if="depth < maxDepth"
             @click="addGroup"
           >{{ labels.addGroup }}
           </v-btn>
       </v-col>
-
+      </v-row>
       <query-builder-children v-bind="$props"/>
-    </v-row>
-  </v-container>
+     
+      </v-container>
 </template>
 
 <script>

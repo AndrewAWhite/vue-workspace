@@ -6,8 +6,7 @@
       </template>
     </vue-query-builder>
     <vue-json-pretty
-      :data="query"
-    >
+      :data="query">
     </vue-json-pretty>
   </div>
 </template>
@@ -23,15 +22,18 @@ export default {
   components: {
     VueQueryBuilder,
     QueryBuilderGroup,
-    VueJsonPretty
+    VueJsonPretty,
   },
   data() {
     return {
       rules: [
         {
-          type: 'text',
-          id: 'vegetable',
-          label: 'Vegetable'
+          type: 'custom-component',
+          id: 'fieldval',
+          label: 'FieldVal',
+          component: FieldValRule,
+          operators: ['='],
+          default: {}
         }
       ],
 
@@ -41,6 +43,10 @@ export default {
           {
             type: 'query-builder-rule',
             query: {
+              rule: 'fieldval',
+              selectedOperator: '=',
+              selectedOperand: 'Fieldval',
+              value: {clean_value: 'Ah alright'}
             }
             }
         ]

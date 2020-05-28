@@ -20,6 +20,7 @@ import VueQueryBuilder from 'vue-query-builder'
 import QueryBuilderGroup from './VuetifyQueryGroup'
 import FieldValRule from './FieldValRule'
 import OutputValRule from './OutputValRule'
+import IssueTypeRule from './IssueTypeRule'
 import VueJsonPretty from 'vue-json-pretty'
 import token from '../config/portal_token'
 
@@ -30,7 +31,8 @@ export default {
     QueryBuilderGroup,
     VueJsonPretty,
     FieldValRule,
-    OutputValRule
+    OutputValRule,
+    IssueTypeRule
   },
   methods: {
     post_query: function() {
@@ -59,10 +61,17 @@ export default {
           default: {}
         },
         {
-          type: 'date',
+          type: 'number',
           id: 'mdrec_key',
           label: 'Mdrec Key',
           operators: ['=']
+        },
+        {
+          type: 'custom-component',
+          id: 'issue',
+          label: 'Issue',
+          component: IssueTypeRule,
+          operators: ['issue_only', 'issue_and_score']
         }
       ],
 

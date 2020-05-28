@@ -19,8 +19,8 @@
     <v-col>
       <v-select
         v-if="query.operator==='issue_and_score'"
-        v-model="score_operand"
-        :items="score_operands"
+        v-model="score_operator"
+        :items="score_operators"
         v-on:input="update_model"
         />
     </v-col>
@@ -48,7 +48,7 @@ export default {
       } else if (this.$props.query.operator==='issue_and_score'){
           this.$emit('input', {
             issue_type: this.$data.issue_type,
-            operand: this.$data.score_operand,
+            operator: this.$data.score_operator,
             score: this.$data.issue_score
           })
       }
@@ -82,8 +82,8 @@ export default {
       issue_type: '',
       issue_types: [],
       issue_score: 0.0,
-      score_operand: '',
-      score_operands: ['>=', '<=', '=']
+      score_operator: '',
+      score_operators: ['>=', '<=', '=']
     }
   },
   mounted() {

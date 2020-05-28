@@ -10,7 +10,7 @@
     </vue-query-builder>
     
     <vue-json-pretty
-      :data="query">
+      :data="query_result">
     </vue-json-pretty>
   </div>
 </template>
@@ -23,6 +23,7 @@ import OutputValRule from './OutputValRule'
 import IssueTypeRule from './IssueTypeRule'
 import VueJsonPretty from 'vue-json-pretty'
 import token from '../config/portal_token'
+import axios from 'axios'
 
 export default {
   name: 'QueryBuilder',
@@ -36,9 +37,19 @@ export default {
   },
   methods: {
     post_query: function() {
-      axios.post(
-
-      )
+      this.$data.query_result= {'MESSAGE': 'LOADING'}
+      axios.create({baseURL: 'http://127.0.0.1:5000'})(
+        {
+          method: 'post',
+          url: '/diagnostic_filter/', 
+          headers: {
+             Authorization: token.token
+           },
+          data: this.$data.query
+        }
+      ).then(result => {
+        this.$data.query_result = result.data
+      })
     }
   },
   data() {
@@ -78,13 +89,10 @@ export default {
       query: {
         logicalOperator: 'all',
         children: [
-          {
-            type: 'query-builder-rule',
-            query: {
-            }
-          }
+
         ]
-      }
+      },
+      query_result: {}
         
       }
     }
